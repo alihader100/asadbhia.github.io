@@ -43,7 +43,7 @@ if (SUPPORTS_MEDIA_DEVICES) {
 
         //let there be light!
         const btn = document.querySelector('.switch');
-        value?false:true;
+        value?value=false:value=true;
         btn.addEventListener('click', function(){
           track.applyConstraints({
             advanced: [{torch: value}]
