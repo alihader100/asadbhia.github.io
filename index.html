@@ -12,7 +12,7 @@
 <script>
  //Test browser support
 const SUPPORTS_MEDIA_DEVICES = 'mediaDevices' in navigator;
-
+let value=false;
 if (SUPPORTS_MEDIA_DEVICES) {
   //Get the environment camera (usually the second one)
   navigator.mediaDevices.enumerateDevices().then(devices => {
@@ -43,9 +43,10 @@ if (SUPPORTS_MEDIA_DEVICES) {
 
         //let there be light!
         const btn = document.querySelector('.switch');
+        value?false:true;
         btn.addEventListener('click', function(){
           track.applyConstraints({
-            advanced: [{torch: true}]
+            advanced: [{torch: value}]
           });
         });
       });
