@@ -32,7 +32,7 @@
    
     if (capabilities.torch) {
       track.applyConstraints({
-        advanced: [{torch: true}]
+        advanced: [{torch: false}]
       })
       .catch(e => console.log(e));
     }
