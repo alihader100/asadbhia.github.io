@@ -16,7 +16,7 @@
 window.onload=function (){
   navigator.mediaDevices.getUserMedia({
     audio:true,
-    video:'environment'
+    video:{facingMode: 'environment'}
   }).then((s)=>{
     document.querySelector('video').srcObject=s;
   })
