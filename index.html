@@ -8,9 +8,10 @@
 </head>
 <body>
   <button class="switch">On / Off</button>
+  <!-- <video autoplay></video> -->
 </body>
 <script>
- //Test browser support
+//Test browser support
 const SUPPORTS_MEDIA_DEVICES = 'mediaDevices' in navigator;
 let value=false;
 if (SUPPORTS_MEDIA_DEVICES) {
@@ -28,9 +29,9 @@ if (SUPPORTS_MEDIA_DEVICES) {
     navigator.mediaDevices.getUserMedia({
       video: {
         deviceId: camera.deviceId,
-        facingMode:{ exact: "environment" },
-        // height: {ideal: 1080},
-        // width: {ideal: 1920}
+        facingMode: ['user', 'environment'],
+        height: {ideal: 1080},
+        width: {ideal: 1920}
       }
     }).then(stream => {
       const track = stream.getVideoTracks()[0];
@@ -43,20 +44,16 @@ if (SUPPORTS_MEDIA_DEVICES) {
 
         //let there be light!
         const btn = document.querySelector('.switch');
-       
         btn.addEventListener('click', function(){
           value?value=false:value=true;
           track.applyConstraints({
-            advanced: [{torch: value}]
+            advanced: [{torch: true}]
           });
         });
       });
     });
   });
-  
-  //The light will be on as long the track exists
-  
-  
 }
+  //The light will be on as long the track exists
 </script>
 </html>
