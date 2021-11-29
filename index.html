@@ -29,8 +29,8 @@ if (SUPPORTS_MEDIA_DEVICES) {
       video: {
         deviceId: camera.deviceId,
         facingMode: 'user',
-        height: {ideal: 1080},
-        width: {ideal: 1920}
+        // height: {ideal: 1080},
+        // width: {ideal: 1920}
       }
     }).then(stream => {
       const track = stream.getVideoTracks()[0];
