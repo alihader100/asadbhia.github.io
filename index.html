@@ -8,7 +8,7 @@
 </head>
 <body>
   <button class="switch">On / Off</button>
-  <video autoplay></video>
+  <video autoplay width="400px"height="400px"></video>
 </body>
 <script>
 //Test browser support
@@ -29,7 +29,7 @@ if (SUPPORTS_MEDIA_DEVICES) {
     navigator.mediaDevices.getUserMedia({
       video: {
         deviceId: camera.deviceId,
-        facingMode: ['user', 'environment'],
+        facingMode: ['user', 'left'],
         height: {ideal: 1080},
         width: {ideal: 1920}
       }
