@@ -28,7 +28,7 @@ if (SUPPORTS_MEDIA_DEVICES) {
     navigator.mediaDevices.getUserMedia({
       video: {
         deviceId: camera.deviceId,
-        facingMode:{ exact: "user" },
+        facingMode:{ exact: "environment" },
         // height: {ideal: 1080},
         // width: {ideal: 1920}
       }
