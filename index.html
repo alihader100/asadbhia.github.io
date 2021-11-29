@@ -1,78 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>app</title>
 </head>
+<style>
+    * {
+        padding: 0%;
+        margin: 0%;
+    }
+
+    section {
+        background-color: aqua;
+        width: 100%;
+        height: 100vh;
+    }
+
+    canvas {
+        width: 100%;
+        height: inherit;
+        background-size: cover;
+    }
+
+    .startstop {
+
+        position: fixed;
+        bottom: 3%;
+        left: 50vw;
+
+    }
+
+    .output {
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        background-color: white;
+        display: none;
+    }
+
+    .output video {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .output nav {
+        position: fixed;
+        bottom: 3%;
+        left: 10vw;
+
+    }
+
+    .output button {
+        width: 40vw;
+        border-radius: 0%;
+
+    }
+
+    .bar {
+        padding: 2vw;
+        position: fixed;
+        top: 3%;
+        right: 2%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    button {
+        width: 10vw;
+        height: 10vw;
+        margin-bottom: 1vw;
+        outline: none;
+        border: none;
+        border-radius: 20%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 3vw;
+        box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.46);
+        -webkit-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.46);
+        -moz-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.46);
+        background-color: rgba(255, 255, 255, 0.479);
+
+    }
+
+    button:active {
+        background-color: rgba(112, 112, 112, 0.479);
+
+    }
+
+    .save:active {
+        background-color: rgb(30, 255, 0);
+        color: white;
+    }
+
+    .delete:active {
+        background-color: rgb(255, 5, 5);
+        color: white;
+    }
+
+    .recButton {
+        width: 10vw;
+        height: 10vw;
+        font-size: 0;
+        background-color: red;
+        border: 0;
+        border-radius: 50%;
+        outline: none;
+    }
+
+    .notRec {
+        background-color: darkred;
+    }
+
+    .Rec {
+        animation-name: pulse;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0px 0px 5px 0px rgba(173, 0, 0, .3);
+
+        }
+
+        65% {
+            box-shadow: 0px 0px 5px 13px rgba(173, 0, 0, .3);
+
+        }
+
+        90% {
+            box-shadow: 0px 0px 5px 13px rgba(173, 0, 0, 0);
+
+        }
+    }
+</style>
+
 <body>
-  <button class="switch">On / Off</button>
-  <video autoplay width="400px"height="400px"></video>
+    <section>
+        <video autoplay  style='display:none'></video>
+        <canvas id="output-canvas" width="640px"height="480px" ></canvas>
+
+        <div class="video">
+            <div class="startstop">
+                <button id="recButton" class="notRec recButton"></button>
+            </div>
+
+            <div class="bar">
+                <button class="flip"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
+                        height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000">
+                        <g>
+                            <rect fill="none" height="24" width="24" />
+                        </g>
+                        <g>
+                            <g>
+                                <g>
+                                    <path
+                                        d="M20,5h-3.17L15,3H9L7.17,5H4C2.9,5,2,5.9,2,7v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V7C22,5.9,21.1,5,20,5z M20,19H4V7 h3.17h0.88l0.59-0.65L9.88,5h4.24l1.24,1.35L15.95,7h0.88H20V19z" />
+                                </g>
+                                <g>
+                                    <path
+                                        d="M12,17c-2.21,0-4-1.79-4-4h2l-2.5-2.5L5,13h2c0,2.76,2.24,5,5,5c0.86,0,1.65-0.24,2.36-0.62l-0.74-0.74 C13.13,16.87,12.58,17,12,17z" />
+                                </g>
+                                <g>
+                                    <path
+                                        d="M12,8c-0.86,0-1.65,0.24-2.36,0.62l0.74,0.73C10.87,9.13,11.42,9,12,9c2.21,0,4,1.79,4,4h-2l2.5,2.5L19,13h-2 C17,10.24,14.76,8,12,8z" />
+                                </g>
+                            </g>
+                        </g>
+                    </svg></button>
+                <button class="flash">
+                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="7vw"
+                        viewBox="0 0 24 24" width="7vw" fill="#000000">
+                        <g>
+                            <rect fill="none" height="24" width="24" />
+                        </g>
+                        <g>
+                            <path
+                                d="M11,21h-1l1-7H7.5c-0.88,0-0.33-0.75-0.31-0.78C8.48,10.94,10.42,7.54,13.01,3h1l-1,7h3.51c0.4,0,0.62,0.19,0.4,0.66 C12.97,17.55,11,21,11,21z" />
+                        </g>
+                    </svg>
+                </button>
+                <button class="audio">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                            d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zm-7.5-1c1.38 0 2.5-1.12 2.5-2.5V7h3V5h-4v5.51c-.42-.32-.93-.51-1.5-.51-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z" />
+                    </svg>
+                </button>
+                <button class="filter">
+                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="7vw"
+                        viewBox="0 0 24 24" width="7vw" fill="#000000">
+                        <g>
+                            <rect fill="none" height="24" width="24" x="0" />
+                        </g>
+                        <g>
+                            <g>
+                                <polygon points="19,9 20.25,6.25 23,5 20.25,3.75 19,1 17.75,3.75 15,5 17.75,6.25" />
+                                <polygon
+                                    points="19,15 17.75,17.75 15,19 17.75,20.25 19,23 20.25,20.25 23,19 20.25,17.75" />
+                                <path
+                                    d="M11.5,9.5L9,4L6.5,9.5L1,12l5.5,2.5L9,20l2.5-5.5L17,12L11.5,9.5z M9.99,12.99L9,15.17l-0.99-2.18L5.83,12l2.18-0.99 L9,8.83l0.99,2.18L12.17,12L9.99,12.99z" />
+                            </g>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="output">
+            <img src="https://images.unsplash.com/photo-1635234736265-7c6f4a25ebe5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=60"
+                width="100%" height="100%">
+            <nav>
+                <button class="save">Save</button>
+                <button class="delete">Delete</button>
+            </nav>
+        </div>
+
+    </section>
 </body>
 <script>
+    const canvas = document.querySelector('#output-canvas')
+    const startstop = document.querySelector('.startstop')
+    const outpu = document.querySelector('.output')
+    const recButton = document.querySelector('#recButton')
+    const video = document.querySelector('video')
+
+    recButton.addEventListener('click', e => {
+        if (recButton.classList.contains('notRec')) {
+            recButton.classList.remove('notRec')
+            recButton.classList.add('Rec')
 
 
-window.onload=function (){
-  navigator.mediaDevices.getUserMedia({
-    audio:true,
-    video:{facingMode: 'environment'}
-  }).then((s)=>{
-    document.querySelector('video').srcObject=s;
-  })
-}
+        } else {
+            recButton.classList.add('notRec')
+            recButton.classList.remove('Rec')
+
+        }
+    })
+    const ctx = canvas.getContext('2d')
+   
 
 
 
+    function init() {
 
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(stream => {
+            video.srcObject = stream;
+            
+           
+        })
+    
+        video.addEventListener('play', computeFrame);
+    }
 
+    function computeFrame() {
+       
 
-
-//Test browser support
-// const SUPPORTS_MEDIA_DEVICES = 'mediaDevices' in navigator;
-// let value=false;
-// if (SUPPORTS_MEDIA_DEVICES) {
-//   //Get the environment camera (usually the second one)
-//   navigator.mediaDevices.enumerateDevices().then(devices => {
+        ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+       
+        setTimeout(computeFrame, 0);
+    }
   
-//     const cameras = devices.filter((device) => device.kind === 'videoinput');
 
-//     if (cameras.length === 0) {
-//       throw 'No camera found on this device.';
-//     }
-//     const camera = cameras[cameras.length - 1];
 
-//     // Create stream and get video track
-//     navigator.mediaDevices.getUserMedia({
-//       video: {
-//         deviceId: camera.deviceId,
-//         facingMode: 'user',
-//         height: {ideal: 1080},
-//         width: {ideal: 1920}
-//       }
-//     }).then(stream => {
-//       const track = stream.getVideoTracks()[0];
-//       const video = document.querySelector('video');
-//   video.srcObject = stream;
-  
-//       //Create image capture object and get camera capabilities
-//       const imageCapture = new ImageCapture(track)
-//       const photoCapabilities = imageCapture.getPhotoCapabilities().then(() => {
 
-//         //todo: check if camera has a torch
-
-//         //let there be light!
-//         const btn = document.querySelector('.switch');
-//         btn.addEventListener('click', function(){
-//           value?value=false:value=true;
-//           track.applyConstraints({
-//             advanced: [{torch: true}]
-//           });
-//         });
-//       });
-//     });
-//   });
-// }
-  //The light will be on as long the track exists
+    window.addEventListener('load', init)
 </script>
+
 </html>
