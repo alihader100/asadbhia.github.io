@@ -143,7 +143,7 @@
 <body>
     <section>
         <video autoplay  style='display:none'></video>
-        <canvas id="output-canvas" width="640px"height="480px" ></canvas>
+        <canvas id="output-canvas"  ></canvas>
 
         <div class="video">
             <div class="startstop">
@@ -251,15 +251,16 @@
         navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(stream => {
             video.srcObject = stream;
             
-           
         })
-    
+     
+        
         video.addEventListener('play', computeFrame);
     }
-
+   
     function computeFrame() {
-       
-
+        
+        canvas.width=video.videoWidth;
+        canvas.height=video.videoHeight
         ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
        
         setTimeout(computeFrame, 0);
