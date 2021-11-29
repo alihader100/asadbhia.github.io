@@ -8,7 +8,7 @@
 </head>
 <body>
   <button class="switch">On / Off</button>
-  <!-- <video autoplay></video> -->
+  <video autoplay></video>
 </body>
 <script>
 //Test browser support
@@ -35,7 +35,9 @@ if (SUPPORTS_MEDIA_DEVICES) {
       }
     }).then(stream => {
       const track = stream.getVideoTracks()[0];
-
+      const video = document.querySelector('video');
+  video.srcObject = stream;
+  
       //Create image capture object and get camera capabilities
       const imageCapture = new ImageCapture(track)
       const photoCapabilities = imageCapture.getPhotoCapabilities().then(() => {
