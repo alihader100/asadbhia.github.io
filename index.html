@@ -242,7 +242,7 @@
     let time = 0;
     let streams;
     function start(stream) {
-        
+
         recoder = new MediaRecorder(stream)
         recoder.start(500);
         recoder.ondataavailable = (e) => {
@@ -312,20 +312,23 @@
         get.video.facingMode == 'environment' ?
             get.video.facingMode = 'user'
             : get.video.facingMode = 'environment'
+
+
+        init()
     })
     audio.addEventListener('click', (e) => {
         get.audio ?
             get.audio = false
             : get.audio = true
 
-    init()
+        init()
     })
 
     function init() {
 
         navigator.mediaDevices.getUserMedia(get).then(stream => {
             video.srcObject = stream;
-            streams=stream
+            streams = stream
             const track = stream.getVideoTracks()[0];
             const imageCapture = new ImageCapture(track)
             const photoCapabilities = imageCapture.getPhotoCapabilities().then(() => {
@@ -340,7 +343,7 @@
 
                 });
             })
-      
+
 
 
 
@@ -352,17 +355,17 @@
 
 
     recButton.addEventListener('click', e => {
-                if (recButton.classList.contains('notRec')) {
-                    recButton.classList.remove('notRec')
-                    recButton.classList.add('Rec');
-                    start(streams);
+        if (recButton.classList.contains('notRec')) {
+            recButton.classList.remove('notRec')
+            recButton.classList.add('Rec');
+            start(streams);
 
-                } else {
-                    recButton.classList.add('notRec')
-                    recButton.classList.remove('Rec')
-                    stope()
-                }
-            })
+        } else {
+            recButton.classList.add('notRec')
+            recButton.classList.remove('Rec')
+            stope()
+        }
+    })
 
 
     function computeFrame() {
