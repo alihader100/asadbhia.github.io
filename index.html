@@ -104,7 +104,8 @@
     .recButton {
         width: 10vw;
         height: 10vw;
-        font-size: 0;
+        font-size: 5vw;
+        color: white;
         background-color: red;
         border: 0;
         border-radius: 50%;
@@ -113,6 +114,7 @@
 
     .notRec {
         background-color: darkred;
+
     }
 
     .Rec {
@@ -224,19 +226,23 @@
 <script>
     const canvas = document.querySelector('#output-canvas')
     const startstop = document.querySelector('.startstop')
+    const flash = document.querySelector('.flash')
+    const flip = document.querySelector('.flip')
+    const audio = document.querySelector('.audio')
     const outpu = document.querySelector('.output')
     const outpuvideo = document.querySelector('.output video')
     const recButton = document.querySelector('#recButton')
     const video = document.querySelector('video')
 
 
-
+    let value = false;
     const ctx = canvas.getContext('2d')
     let parts = []
     let url;
     let time = 0;
+    let streams;
     function start(stream) {
-
+        
         recoder = new MediaRecorder(stream)
         recoder.start(500);
         recoder.ondataavailable = (e) => {
@@ -244,21 +250,21 @@
 
         }
         clock = setInterval(function _clock() {
-            if (time > 5) {
+            if (time > 60) {
                 clearInterval(clock);
                 recoder.stop();
                 rendervideo()
                 outpu.style.display = 'block'
                 outpuvideo.src = url
                 time = 0
-
                 recButton.classList.add('notRec')
                 recButton.classList.remove('Rec')
 
 
             } else {
-
+                recButton.innerHTML = `${time}`
                 console.log(time += 1)
+
             }
 
         }, 1000)
@@ -283,6 +289,7 @@
     }
     function clearvideo() {
         parts = [];
+        recButton.innerHTML = ``
         outpu.style.display = 'none'
     }
 
@@ -292,18 +299,63 @@
         clearInterval(clock);
 
     }
+    const get = {
+        video: {
+            facingMode: 'environment',
+            height: { ideal: 1080 },
+            width: { ideal: 1920 }
+        },
+        audio: false,
 
+    }
+    flip.addEventListener('click', (e) => {
+        get.video.facingMode == 'environment' ?
+            get.video.facingMode = 'user'
+            : get.video.facingMode = 'environment'
+    })
+    audio.addEventListener('click', (e) => {
+        get.audio ?
+            get.audio = false
+            : get.audio = true
+
+    init()
+    })
 
     function init() {
 
-        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+        navigator.mediaDevices.getUserMedia(get).then(stream => {
             video.srcObject = stream;
+            streams=stream
+            const track = stream.getVideoTracks()[0];
+            const imageCapture = new ImageCapture(track)
+            const photoCapabilities = imageCapture.getPhotoCapabilities().then(() => {
+                flash.addEventListener('click', function () {
+                    value ? value = false : value = true
 
-            recButton.addEventListener('click', e => {
+                    track.applyConstraints({
+                        advanced: [{ torch: value }]
+                    }).catch(err => alert("flash not supported"));
+                    console.log(value)
+
+
+                });
+            })
+      
+
+
+
+        });
+
+
+        video.addEventListener('play', computeFrame);
+    }
+
+
+    recButton.addEventListener('click', e => {
                 if (recButton.classList.contains('notRec')) {
                     recButton.classList.remove('notRec')
                     recButton.classList.add('Rec');
-                    start(stream);
+                    start(streams);
 
                 } else {
                     recButton.classList.add('notRec')
@@ -311,17 +363,6 @@
                     stope()
                 }
             })
-
-
-
-        })
-
-
-        video.addEventListener('play', computeFrame);
-    }
-
-
-
 
 
     function computeFrame() {
