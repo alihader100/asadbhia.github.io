@@ -14,7 +14,7 @@
     }
 
     section {
-        background-color: aqua;
+        background-color: white;
         width: 100%;
         height: 100vh;
     }
@@ -35,7 +35,7 @@
 
     .output {
         width: 100%;
-        height: 100vh;
+        height: inherit;
         position: absolute;
         top: 0%;
         left: 0%;
@@ -77,8 +77,8 @@
         outline: none;
         border: none;
         border-radius: 20%;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 3vw;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 4vw;
         box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.46);
         -webkit-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.46);
         -moz-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.46);
@@ -102,8 +102,8 @@
     }
 
     .recButton {
-        width: 10vw;
-        height: 10vw;
+        width: 15vw;
+        height: 15vw;
         font-size: 5vw;
         color: white;
         background-color: red;
@@ -176,45 +176,18 @@
                         </g>
                     </svg></button>
                 <button class="flash">
-                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="7vw"
-                        viewBox="0 0 24 24" width="7vw" fill="#000000">
-                        <g>
-                            <rect fill="none" height="24" width="24" />
-                        </g>
-                        <g>
-                            <path
-                                d="M11,21h-1l1-7H7.5c-0.88,0-0.33-0.75-0.31-0.78C8.48,10.94,10.42,7.54,13.01,3h1l-1,7h3.51c0.4,0,0.62,0.19,0.4,0.66 C12.97,17.55,11,21,11,21z" />
-                        </g>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 10h-3.61l2.28 2.28zm0-8H7v1.61l6.13 6.13zm-13.59.86L2 4.27l5 5V13h3v9l3.58-6.15L17.73 20l1.41-1.41z"/></svg>
                 </button>
                 <button class="audio">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000">
-                        <path d="M0 0h24v24H0V0z" fill="none" />
-                        <path
-                            d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zm-7.5-1c1.38 0 2.5-1.12 2.5-2.5V7h3V5h-4v5.51c-.42-.32-.93-.51-1.5-.51-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L7.83 13H5v-2h2.83L10 8.83zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>
                 </button>
-                <button class="filter">
-                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="7vw"
-                        viewBox="0 0 24 24" width="7vw" fill="#000000">
-                        <g>
-                            <rect fill="none" height="24" width="24" x="0" />
-                        </g>
-                        <g>
-                            <g>
-                                <polygon points="19,9 20.25,6.25 23,5 20.25,3.75 19,1 17.75,3.75 15,5 17.75,6.25" />
-                                <polygon
-                                    points="19,15 17.75,17.75 15,19 17.75,20.25 19,23 20.25,20.25 23,19 20.25,17.75" />
-                                <path
-                                    d="M11.5,9.5L9,4L6.5,9.5L1,12l5.5,2.5L9,20l2.5-5.5L17,12L11.5,9.5z M9.99,12.99L9,15.17l-0.99-2.18L5.83,12l2.18-0.99 L9,8.83l0.99,2.18L12.17,12L9.99,12.99z" />
-                            </g>
-                        </g>
-                    </svg>
+                <button class="addtime">
+
                 </button>
             </div>
         </div>
         <div class="output">
-            <video autoplay></video>
+            <video autoplay controls></video>
             <nav>
                 <button class="save" onclick="download()">Save</button>
                 <button class="delete" onclick="clearvideo()">Delete</button>
@@ -229,6 +202,7 @@
     const flash = document.querySelector('.flash')
     const flip = document.querySelector('.flip')
     const audio = document.querySelector('.audio')
+    const addtime = document.querySelector('.addtime')
     const outpu = document.querySelector('.output')
     const outpuvideo = document.querySelector('.output video')
     const recButton = document.querySelector('#recButton')
@@ -241,6 +215,9 @@
     let url;
     let time = 0;
     let streams;
+    let totaltime = 60;
+
+    addtime.innerHTML = `${totaltime}s`
     function start(stream) {
 
         recoder = new MediaRecorder(stream)
@@ -250,7 +227,7 @@
 
         }
         clock = setInterval(function _clock() {
-            if (time > 20) {
+            if (time > totaltime) {
                 clearInterval(clock);
                 recoder.stop();
                 rendervideo()
@@ -305,7 +282,7 @@
             height: { ideal: 1080 },
             width: { ideal: 1920 }
         },
-        audio: false,
+        audio: true,
 
     }
     flip.addEventListener('click', (e) => {
@@ -318,8 +295,8 @@
     })
     audio.addEventListener('click', (e) => {
         get.audio ?
-            get.audio = false
-            : get.audio = true
+            (get.audio = false,audio.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4.34 2.93L2.93 4.34 7.29 8.7 7 9H3v6h4l5 5v-6.59l4.18 4.18c-.65.49-1.38.88-2.18 1.11v2.06c1.34-.3 2.57-.92 3.61-1.75l2.05 2.05 1.41-1.41L4.34 2.93zM10 15.17L7.83 13H5v-2h2.83l.88-.88L10 11.41v3.76zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8l-1.88 1.88L12 7.76zm4.5 8c0-1.77-1.02-3.29-2.5-4.03v1.79l2.48 2.48c.01-.08.02-.16.02-.24z"/></svg>`)
+            : (get.audio = true,audio.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L7.83 13H5v-2h2.83L10 8.83zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/></svg>`)
 
         init()
     })
@@ -333,11 +310,13 @@
             const imageCapture = new ImageCapture(track)
             const photoCapabilities = imageCapture.getPhotoCapabilities().then(() => {
                 flash.addEventListener('click', function () {
-                    value ? value = false : value = true
+                    value ? (value = false,flash.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 10h-3.61l2.28 2.28zm0-8H7v1.61l6.13 6.13zm-13.59.86L2 4.27l5 5V13h3v9l3.58-6.15L17.73 20l1.41-1.41z"/></svg>`) :( value = true,flash.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7 2v11h3v9l7-12h-4l3-8z"/></svg>`)
 
                     track.applyConstraints({
                         advanced: [{ torch: value }]
-                    }).catch(err => alert("flash not supported"));
+                    }).catch(err => {
+                        flash.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" height="7vw" viewBox="0 0 24 24" width="7vw" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 10h-3.61l2.28 2.28zm0-8H7v1.61l6.13 6.13zm-13.59.86L2 4.27l5 5V13h3v9l3.58-6.15L17.73 20l1.41-1.41z"/></svg>`
+                        alert("flash not supported")});
                     console.log(value)
 
 
@@ -367,7 +346,14 @@
         }
     })
 
-
+    addtime.addEventListener('click', (e) => {
+        if (totaltime < 600) {
+            totaltime += 30
+            addtime.innerHTML = `${totaltime / 60}m`
+        } else {
+            alert("max time is 10 min")
+        }
+    })
     function computeFrame() {
 
         canvas.width = video.videoWidth;
