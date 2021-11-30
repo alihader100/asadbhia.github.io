@@ -35,7 +35,7 @@
 
     .output {
         width: 100%;
-        height: 100vh;
+        height: 99vh;
         position: absolute;
         top: 0%;
         left: 0%;
@@ -142,8 +142,8 @@
 
 <body>
     <section>
-        <video autoplay  style='display:none'></video>
-        <canvas id="output-canvas"  ></canvas>
+        <video autoplay style='display:none'></video>
+        <canvas id="output-canvas"></canvas>
 
         <div class="video">
             <div class="startstop">
@@ -212,11 +212,10 @@
             </div>
         </div>
         <div class="output">
-            <img src="https://images.unsplash.com/photo-1635234736265-7c6f4a25ebe5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=60"
-                width="100%" height="100%">
+            <video autoplay></video>
             <nav>
-                <button class="save">Save</button>
-                <button class="delete">Delete</button>
+                <button class="save" onclick="download()">Save</button>
+                <button class="delete" onclick="clearvideo()">Delete</button>
             </nav>
         </div>
 
@@ -226,50 +225,119 @@
     const canvas = document.querySelector('#output-canvas')
     const startstop = document.querySelector('.startstop')
     const outpu = document.querySelector('.output')
+    const outpuvideo = document.querySelector('.output video')
     const recButton = document.querySelector('#recButton')
     const video = document.querySelector('video')
 
-    recButton.addEventListener('click', e => {
-        if (recButton.classList.contains('notRec')) {
-            recButton.classList.remove('notRec')
-            recButton.classList.add('Rec')
 
 
-        } else {
-            recButton.classList.add('notRec')
-            recButton.classList.remove('Rec')
+    const ctx = canvas.getContext('2d')
+    let parts = []
+    let url;
+    let time = 0;
+    function start(stream) {
+
+        recoder = new MediaRecorder(stream)
+        recoder.start(500);
+        recoder.ondataavailable = (e) => {
+            parts.push(e.data)
 
         }
-    })
-    const ctx = canvas.getContext('2d')
-   
+        clock = setInterval(function _clock() {
+            if (time > 5) {
+                clearInterval(clock);
+                recoder.stop();
+                rendervideo()
+                outpu.style.display = 'block'
+                outpuvideo.src = url
+                time = 0
 
+                recButton.classList.add('notRec')
+                recButton.classList.remove('Rec')
+
+
+            } else {
+
+                console.log(time += 1)
+            }
+
+        }, 1000)
+
+
+    }
+    function download() {
+        const a = document.createElement("a")
+        a.style.display = "none"
+        a.href = url
+        a.download = "sample.mp4"
+        a.click();
+    }
+    function rendervideo() {
+        if (parts.length >= 0) {
+            const blob = new Blob(parts, {
+                type: "video/mp4"
+            })
+            url = URL.createObjectURL(blob);
+            parts = [];
+        }
+    }
+    function clearvideo() {
+        parts = [];
+        outpu.style.display = 'none'
+    }
+
+
+    function stope() {
+        recoder.stop();
+        clearInterval(clock);
+
+    }
 
 
     function init() {
 
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(stream => {
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
             video.srcObject = stream;
-            
+
+            recButton.addEventListener('click', e => {
+                if (recButton.classList.contains('notRec')) {
+                    recButton.classList.remove('notRec')
+                    recButton.classList.add('Rec');
+                    start(stream);
+
+                } else {
+                    recButton.classList.add('notRec')
+                    recButton.classList.remove('Rec')
+                    stope()
+                }
+            })
+
+
+
         })
-     
-        
+
+
         video.addEventListener('play', computeFrame);
     }
-   
+
+
+
+
+
     function computeFrame() {
-        
-        canvas.width=video.videoWidth;
-        canvas.height=video.videoHeight
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight
         ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-       
+
         setTimeout(computeFrame, 0);
     }
-  
+
 
 
 
     window.addEventListener('load', init)
+
 </script>
 
 </html>
